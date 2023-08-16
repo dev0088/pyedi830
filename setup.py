@@ -5,7 +5,7 @@ import re
 from setuptools import setup, find_packages
 
 setup(
-    name="PyEDI830",
+    name="pyedi830",
     description="EDI 830 parser/converter",
     long_description="""PyEDI830 uses JSON format definitions to make it easy
     to generate or read X12 EDI messages from/to Python dicts/lists.""",
