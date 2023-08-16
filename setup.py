@@ -13,7 +13,7 @@ setup(
     author="Ninja Dev",
     author_email="ninjadev999@gmail.com",
     license="MIT",
-    version="1.0.0",
+    version="1.0.1",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Plugins",
@@ -25,8 +25,10 @@ setup(
         "Topic :: Text Processing"
     ],
     keywords="x12 edi 830",
-    packages=find_packages(exclude=['test']),
-    package_data={"pyedi830.formats": ["830_Forecast.json", "830.json", "ST.json"]},
+    packages=['pyedi830', 'pyedi830.formats'],
+    package_data={
+        "pyedi830": ["formats/*.json"]
+    },
     install_requires=['colorama', 'pandas'],
     include_package_data=True,
 )
