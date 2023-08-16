@@ -62,7 +62,7 @@ Syntax rules are specified as a dict with a `rule` and a list of `criteria`. Val
 
     # Convert to json file
     json_file_path = "test_edi_830_forecast.json"
-    edi830_parser = EDIParser(
+    edi_parser = EDIParser(
         edi_format="830_Forecast",
         element_delimiter="*",
         segment_delimiter="~\n",
@@ -73,19 +73,19 @@ Syntax rules are specified as a dict with a `rule` and a list of `criteria`. Val
         use_child_detail=False,
         use_debug=True
     )
-    edi830_parser.to_json(edi_file_path, json_file_path)
+    edi_parser.to_json(edi_file_path, json_file_path)
 
     # Parse to json data
-    json_data = edi830_parser.parse_from_file(edi_file_path)
+    json_data = edi_parser.parse(edi_file_path)
 
 
     # Convert to csv file.
     csv_file_path = "test_edi_830_forecast.csv"
-    edi830_parser_df = EDIParserDF(use_debug=True)
-    edi830_parser_df.to_csv(edi_file_path, csv_file_path)
+    edi_parser_df = EDIParserDF(use_debug=True)
+    edi_parser_df.to_csv(edi_file_path, csv_file_path)
     
     # Parse to dataframe
-    df = edi830_parser_df.create_df_from_file(edi_file_path)
+    df = edi_parser_df.parse(edi_file_path)
 ```
 
 # Install

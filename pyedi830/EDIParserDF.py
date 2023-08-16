@@ -3,11 +3,8 @@ Parses a provided EDI message and tries to build a dictionary from the data
 Provides hints if data is missing, incomplete, or incorrect.
 """
 
-import datetime
-import json
 import pandas as pd
 
-from .supported_formats import supported_formats
 from .debug import Debug
 from .EDIParser import EDIParser
 
@@ -30,11 +27,11 @@ class EDIParserDF(object):
         self.use_debug = use_debug
 
     def to_csv(self, edi_file_path, csv_file_path):
-        df = self.create_df_from_file(edi_file_path)
+        df = self.parse(edi_file_path)
         df.to_csv(csv_file_path)
 
-    def create_df_from_file(self, edi_file_path):
-        data = self.parser.parse_from_file(edi_file_path)
+    def parse(self, edi_file_path):
+        data = self.parser.parse(edi_file_path)
         parent_df = self.create_parent_df(data)
         loop_df = self.create_loop_df(data)
         merged_df = pd.concat([parent_df, loop_df], axis=1)

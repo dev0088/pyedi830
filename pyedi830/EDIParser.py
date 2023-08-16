@@ -44,7 +44,22 @@ class EDIParser(object):
     ################################
     # JSON Handers
     ################################
-    def parse(self, data):
+    def parse(self, file_path):
+        json_data = None
+        with open(file_path, "r") as edi_file:
+            edi = edi_file.read()
+            lines = edi.split('\n')
+            # Remove last empty lines
+            while lines and not lines[-1].strip():
+                lines.pop()
+            edi = '\n'.join(lines)
+            # Add an empty line to parse
+            edi += '\n'
+            found_segments, edi_data = self.parse_data(edi)
+            json_data = edi_data
+        return json_data
+
+    def parse_data(self, data):
         """ Processes each line in the string `data`, attempting to auto-detect the EDI type.
 
         Returns the parsed message as a dict. """
@@ -231,21 +246,6 @@ class EDIParser(object):
         to_return[EDIParser.VALUE_NAME] = loop_list
         return to_return, edi_segments
 
-    def parse_from_file(self, file_path):
-        json_data = None
-        with open(file_path, "r") as edi_file:
-            edi = edi_file.read()
-            lines = edi.split('\n')
-            # Remove last empty lines
-            while lines and not lines[-1].strip():
-                lines.pop()
-            edi = '\n'.join(lines)
-            # Add an empty line to parse
-            edi += '\n'
-            found_segments, edi_data = self.parse(edi)
-            json_data = edi_data
-        return json_data
-
     def get_N1_key(self, segment_name, segment_obj):
         if self.use_debug:
             Debug.log_debug(f"get_N1_key: segment_name: {segment_name}")
@@ -304,7 +304,7 @@ class EDIParser(object):
             json_file.write(str_json)
 
     def to_json(self, edi_file_path, json_file_path):
-        json_data = self.parse_from_file(edi_file_path)
+        json_data = self.parse(edi_file_path)
         if json_data is None:
             Debug.log_error("Failed to parse EDI file: {edi_file_path}")
             return

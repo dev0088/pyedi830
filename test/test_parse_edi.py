@@ -24,11 +24,11 @@ class TestParse830(unittest.TestCase):
         json_file_path = "test/test_edi_830_forecast.json"
         
         # Parse the EDI file to JSON data
-        edi_data = self.parser.parse_from_file(edi_file_path)
+        edi_data = self.parser.parse(edi_file_path)
         print("\n\n{}".format(edi_data))
         print("\n\n")
         pprint.pprint(edi_data)
         
-        # Write to JSON file
+        # Convert to JSON file
         self.parser.to_json(edi_file_path, json_file_path)
 
