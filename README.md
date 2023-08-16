@@ -85,7 +85,7 @@ Syntax rules are specified as a dict with a `rule` and a list of `criteria`. Val
     edi830_parser_df.to_csv(edi_file_path, csv_file_path)
     
     # Parse to dataframe
-    json_data = edi830_parser_df.create_df_from_file(edi_file_path)
+    df = edi830_parser_df.create_df_from_file(edi_file_path)
 ```
 
 # Install

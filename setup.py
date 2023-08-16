@@ -14,7 +14,7 @@ setup(
     author="Ninja Dev",
     author_email="ninjadev999@gmail.com",
     license="MIT",
-    version="1.0.3",
+    version="1.0.4",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Plugins",
