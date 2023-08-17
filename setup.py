@@ -4,17 +4,21 @@
 import re
 from setuptools import setup, find_packages
 
-LONG_DESCRIPTION = """Pyedi830 uses JSON format definitions to make it easy to parse and convert from EDI830 file to JSON and CSV file/data."""
+long_description = """Pyedi830 uses JSON format definitions to make it easy to parse and convert from EDI830 file to JSON and CSV file/data."""
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+    
 setup(
     name="pyedi830",
     description="EDI 830 parser/converter",
-    long_description=LONG_DESCRIPTION,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/dev0088/pyedi830",
     author="Ninja Dev",
     author_email="ninjadev999@gmail.com",
     license="MIT",
-    version="1.1.0",
+    version="1.1.1",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Plugins",

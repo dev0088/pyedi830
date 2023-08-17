@@ -1,5 +1,5 @@
 # pyedi830
-EDI830 parser in Python. Parse EDI830 files and convert to JSON &amp; CSV file according to specific formats
+Pyedi830 uses JSON format definitions to make it easy to parse and convert from EDI830 file to JSON and CSV file/data.
 
 ## TODOs
 
