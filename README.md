@@ -55,7 +55,6 @@ Syntax rules are specified as a dict with a `rule` and a list of `criteria`. Val
 ```python
     from pyedi830 import EDIParser
     from pyedi830 import EDIParserDF
-
     
     
     edi_file_path = "test/test_edi_830_forecast.edi"
