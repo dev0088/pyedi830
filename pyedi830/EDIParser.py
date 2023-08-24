@@ -5,6 +5,7 @@ Provides hints if data is missing, incomplete, or incorrect.
 
 import datetime
 import json
+from io import StringIO
 
 from .supported_formats import supported_formats
 from .debug import Debug
@@ -50,18 +51,30 @@ class EDIParser(object):
     # JSON Handers
     ################################
     def parse(self, file_path):
+        if isinstance(file_path, StringIO):
+            return self.parse_buffer(file_path)
+        
+        # Read the content of the file into a StringIO buffer
+        with open(file_path, 'r') as file:
+            buffer = StringIO(file.read())
+        
+        return self.parse_buffer(buffer)
+    
+    def parse_buffer(self, buffer: StringIO):
         json_data = None
-        with open(file_path, "r") as edi_file:
-            edi = edi_file.read()
-            lines = edi.split('\n')
-            # Remove last empty lines
-            while lines and not lines[-1].strip():
-                lines.pop()
-            edi = '\n'.join(lines)
-            # Add an empty line to parse
-            edi += '\n'
-            found_segments, edi_data = self.parse_data(edi)
-            json_data = edi_data
+        edi = buffer.getvalue()
+        lines = edi.split('\n')
+        
+        # Remove last empty lines
+        while lines and not lines[-1].strip():
+            lines.pop()
+        edi = '\n'.join(lines)
+        
+        # Add an empty line to parse
+        edi += '\n'
+        found_segments, edi_data = self.parse_data(edi)
+        json_data = edi_data
+        
         return json_data
 
     def parse_data(self, data):
@@ -341,10 +354,22 @@ class EDIParser(object):
         str_json = json.dumps(json_data, default=self.datetime_serializer, ensure_ascii=False, indent=4)
         with open(json_file_path, "w") as json_file:
             json_file.write(str_json)
+        return json_file_path
+
+    def write_to_buffer(self, json_data):
+        str_json = json.dumps(json_data, default=self.datetime_serializer, ensure_ascii=False, indent=4)
+        buffer = StringIO()
+        buffer.write(str_json)
+        buffer.seek(0)
+        return buffer
 
     def to_json(self, edi_file_path, json_file_path):
         json_data = self.parse(edi_file_path)
         if json_data is None:
             Debug.log_error("Failed to parse EDI file: {edi_file_path}")
-            return
-        self.write_to_json_file(json_file_path, json_data)
+            return None
+        if isinstance(json_file_path, StringIO):
+            json_file_path = self.write_to_buffer(json_data)
+            return json_file_path
+        
+        return self.write_to_json_file(json_file_path, json_data)

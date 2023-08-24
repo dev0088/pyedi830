@@ -63,7 +63,7 @@ class EDI2CSV(EDIParser):
         )
         self.json_data = None
         self.use_debug = use_debug
-    
+
     def to_csv(self, edi_file_path, csv_file_path):
         
         parent_df, loop_df = self.parse(edi_file_path)

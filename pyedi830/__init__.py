@@ -12,7 +12,8 @@ from .EDIParser import EDIParser
 from .EDIParserDF import EDIParserDF
 from .EDI2CSV import EDI2CSV
 from .EDI2PDF import EDI2PDF
-from .supported_formats import supported_formats, DEFAULT_FORMAT
+from .supported_formats import supported_formats
+from .supported_formats import DEFAULT_FORMAT
 from .debug import Debug
 
 def explain(edi_format, section_id=""):
