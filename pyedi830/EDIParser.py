@@ -42,7 +42,9 @@ class EDIParser(object):
         elif edi_format is None:
             self.edi_format = None
         else:
-            raise ValueError("Unsupported EDI format {}".format(edi_format))
+            # raise ValueError("Unsupported EDI format {}".format(edi_format))
+            self.edi_format = None
+            Debug.log_warning("Unsupported EDI format {}".format(edi_format))
 
     ################################
     # JSON Handers

@@ -53,6 +53,7 @@ class EDI2CSV(EDIParser):
             edi_format="830_Forecast",
             element_delimiter="*",
             segment_delimiter="~\n",
+            use_parent_key_detail=False,
             use_parent_detail=True,
             parent_headers=['symbol', 'id', 'name', 'short_name', 'type', 'notes', 'req', 'data_type', 'data_type_ids', 'length'],
             use_child_key_detail=False,
