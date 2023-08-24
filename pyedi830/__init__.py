@@ -10,6 +10,8 @@ import os
 
 from .EDIParser import EDIParser
 from .EDIParserDF import EDIParserDF
+from .EDI2CSV import EDI2CSV
+from .EDI2PDF import EDI2PDF
 from .supported_formats import supported_formats
 from .debug import Debug
 

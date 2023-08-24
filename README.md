@@ -54,9 +54,10 @@ Syntax rules are specified as a dict with a `rule` and a list of `criteria`. Val
 
 ```python
     from pyedi830 import EDIParser
-    from pyedi830 import EDIParserDF
-    
-    
+    from pyedi830 import EDI2CSV
+    from pyedi830 import EDI2PDF
+
+
     edi_file_path = "test/test_edi_830_forecast.edi"
 
     # Convert to json file
@@ -79,12 +80,20 @@ Syntax rules are specified as a dict with a `rule` and a list of `criteria`. Val
 
 
     # Convert to csv file.
-    csv_file_path = "test_edi_830_forecast.csv"
-    edi_parser_df = EDIParserDF(use_debug=True)
-    edi_parser_df.to_csv(edi_file_path, csv_file_path)
-    
-    # Parse to dataframe
-    df = edi_parser_df.parse(edi_file_path)
+    csv_file_path = "edi_830.csv"
+    edi2csv = EDI2CSV(use_debug=True)
+    edi2csv.to_csv(edi_file_path=edi_file_path, csv_file_path=csv_file_path)
+
+
+    # Convert to html
+    html_file_path = "edi_830.html"
+    edi2csv = EDI2PDF(use_debug=True)
+    edi2csv.to_html(edi_file_path=edi_file_path, html_file_path='html_file_path')
+
+    # Convert to pdf
+    pdf_file_path = "edi_830.pdf"
+    edi2csv.to_pdf(edi_file_path=edi_file_path, pdf_file_path=pdf_file_path, temp_html_file_path=html_file_path)
+
 ```
 
 # Install

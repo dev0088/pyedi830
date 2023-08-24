@@ -11,7 +11,7 @@ from .EDIParser import EDIParser
 class EDIParserDF(object):
     def __init__(
         self, edi_format="830_Forecast", element_delimiter="*", segment_delimiter="~\n", data_delimiter="`",
-        use_debug=False,
+        show_symbol_in_header=False, repeat_filled_out=False, use_debug=False,
     ):
         self.parser = EDIParser(
             edi_format="830_Forecast",
@@ -19,11 +19,13 @@ class EDIParserDF(object):
             segment_delimiter="~\n",
             use_parent_key_detail=True,
             use_parent_detail=True,
-            parent_headers=['symbol', 'name', 'type', 'notes'],
+            parent_headers=['symbol', 'id', 'name', 'short_name', 'type', 'notes', 'req', 'data_type', 'data_type_ids', 'length'],
             use_child_key_detail=True,
             use_child_detail=False,
             use_debug=False
         )
+        self.show_symbol_in_header = show_symbol_in_header
+        self.repeat_filled_out = repeat_filled_out
         self.use_debug = use_debug
 
     def to_csv(self, edi_file_path, csv_file_path):
@@ -57,7 +59,9 @@ class EDIParserDF(object):
 
             values = parent[EDIParser.VALUE_NAME]
             for name, value in values.items():
-                col_name = f"{parent_symbol}_{name}"
+                col_name = name
+                if self.show_symbol_in_header:
+                    col_name = f"{parent_symbol}_{name}"
                 if self.use_debug:
                     Debug.log_debug(f"{col_name}: {value}")
                 df[col_name] = [value]
@@ -73,9 +77,14 @@ class EDIParserDF(object):
         for segment in segments:
             for segment_key, segment_data in segment.items():
                 n1_values = segment_data[EDIParser.VALUE_NAME]
-                prefix_key = f"{segment_data['symbol']}_{n1_values['Entity_ID_Code']}"
+                prefix_key = n1_values['Entity ID Code']
+                if self.show_symbol_in_header:
+                    prefix_key = f"{segment_data['symbol']}_{n1_values['Entity ID Code']}"
+                
                 for n1_value_name, n1_vavlue in n1_values.items():
-                    col_name = f'{prefix_key}_{n1_value_name}'
+                    col_name = f'{prefix_key} {n1_value_name}'
+                    if self.show_symbol_in_header:
+                        col_name = f'{prefix_key}_{n1_value_name}'                    
                     df[col_name] = [n1_vavlue]
         return df
 
@@ -112,22 +121,24 @@ class EDIParserDF(object):
                 s_type = segment["type"]
                 
                 if s_type == "segment":
-                    prefix_col_name = f"{s_symbol}_{s_key}"
+                    prefix_col_name = s_key
+                    if self.show_symbol_in_header:
+                        prefix_col_name = f"{s_symbol}_{s_key}"
                     s_values = segment["value"]
                     for v_key, v_value in s_values.items():
-                        col_name = f"{prefix_col_name}_{v_key}"
+                        col_name = f"{prefix_col_name} {v_key}"
                         v_df[col_name] = [v_value]
                 if s_type == "loop":
                     nested_df = self.parse_loop_df(segment)
-                    # v_df = pd.concat([v_df, nested_df], axis=1)
-                    num_rows = len(nested_df)
-                    v_df = v_df.loc[v_df.index.repeat(num_rows)].reset_index(drop=True)
-                    v_df = pd.concat([v_df, nested_df.reset_index(drop=True)], axis=1)
-
+                    if self.repeat_filled_out:
+                        num_rows = len(nested_df)
+                        v_df = v_df.loc[v_df.index.repeat(num_rows)].reset_index(drop=True)
+                        v_df = pd.concat([v_df, nested_df.reset_index(drop=True)], axis=1)
+                    else:
+                        v_df = pd.concat([v_df, nested_df], axis=1)
             if df.empty:
                 df = v_df
             else:
                 df = pd.concat([df, v_df], axis=0, ignore_index=True)
         return df
-
     

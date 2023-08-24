@@ -470,7 +470,6 @@
                         "notes": "Code designating the system/method of code structure used for Identification Code (N104)"
                     },
                     {   "id": "N104", "name": "ID code",
-                        "short_name": "Location",
                         "type": "element",
                         "req": "C",
                         "data_type": "ID",
@@ -1677,7 +1676,7 @@
                 "name": "Starting date of the forecast",
                 "short_name": "Start Date",
                 "req": "M",
-                "data_type": "DT",
+                "data_type": "TM",
                 "data_type_ids": null,
                 "length": {"min": 8, "max": 8},
                 "notes": ""
@@ -1686,7 +1685,7 @@
                 "name": "End data of the forecast ",
                 "short_name": "End Date",
                 "req": "M",
-                "data_type": "DT",
+                "data_type": "AN",
                 "data_type_ids": null,
                 "length": {"min": 8, "max": 8},
                 "notes": ""
@@ -1728,10 +1727,10 @@
                 "name": "Planning Schedule Type Code",
                 "short_name": "Planning Schedule Type",
                 "req": "M",
-                "data_type": "AN",
-                "data_type_ids": {"MN": "Consumer Sales Forecast", "AA": "Customized Ordering Forecast"},
+                "data_type": "DT",
+                "data_type_ids": {"MN": "Consumer Sales Forecast"},
                 "length": {"min": 2, "max": 2},
-                "notes": "MN = Consumer Sales Forecast, AA = Customized Ordering Forecast"
+                "notes": "MN = Consumer Sales Forecast"
             }
         ]
     },
@@ -1747,8 +1746,7 @@
                 "max_uses": 1,
                 "elements": [
                     {   "id": "LIN01", "type": "element",
-                        "name": "Buyer Part",
-                        "short_name": "Buyer Part",
+                        "name": "None",
                         "req": "O",
                         "data_type": "AN",
                         "data_type_ids": null,
@@ -1756,19 +1754,15 @@
                         "notes": "None"
                     },
                     {   "id": "LIN02", "type": "element",
-                        "name": "Product Service Id qualifier 2",
+                        "name": "Product Service Id qualifier",
                         "req": "M",
                         "data_type": "AN",
-                        "data_type_ids": {
-                            "UP": "UPC consumer package code",
-                            "UK": "UPC/EAN shipping container"
-                        },
+                        "data_type_ids": {"UP": "UPC consumer package code"},
                         "length": {"min": 2, "max": 2},
                         "notes": "Code value: UP= UPC consumer package code"
                     },
                     {   "id": "LIN03", "type": "element",
-                        "name": "Product Service Id 2",
-                        "short_name": "GTIN",
+                        "name": "Product Service Id",
                         "req": "M",
                         "data_type": "AN",
                         "data_type_ids": null,
@@ -1776,39 +1770,32 @@
                         "notes": "Retail UPC number. Format 1-5-5-1"
                     },
                     {   "id": "LIN04", "type": "element",
-                        "name": "Product Service Id qualifier 4",
+                        "name": "Product Service Id qualifier",
                         "req": "O",
                         "data_type": "AN",
-                        "data_type_ids": {
-                            "UP": "UPC consumer package code",
-                            "UK": "UPC/EAN shipping container"
-                        },
+                        "data_type_ids": {"UK": "UPC/EAN shipping container"},
                         "length": {"min": 2, "max": 2},
                         "notes": "Code value: UK= UPC/EAN shipping container"
                     },
                     {   "id": "LIN05", "type": "element",
-                        "name": "Product Service Id 4",
-                        "short_name": "Retail UPC number 12",
-                        "req": "O",
+                        "name": "Product Service Id",
+                        "req": "C",
                         "data_type": "AN",
                         "data_type_ids": null,
                         "length": {"min": 14, "max": 14},
                         "notes": "Retail UPC number. Format 1-2-5-5-1"
                     },
                     {   "id": "LIN06", "type": "element",
-                        "name": "Product Service Id qualifier 6",
+                        "name": "Product Service Id qualifier",
                         "req": "O",
                         "data_type": "AN",
-                        "data_type_ids": {
-                            "F7": "Item description"
-                        },
+                        "data_type_ids": {"F7": "Item description"},
                         "length": {"min": 2, "max": 2},
                         "notes": "Code value: F7= Item description"
                     },
                     {   "id": "LIN07", "type": "element",
-                        "name": "Product Service Id 6",
-                        "short_name": "Item Description",
-                        "req": "O",
+                        "name": "Product Service Id",
+                        "req": "C",
                         "data_type": "AN",
                         "data_type_ids": null,
                         "length": {"min": 1, "max": 30},
@@ -1824,7 +1811,6 @@
                 "elements": [
                     {   "id": "PO401", "type": "element",
                         "name": "Pack",
-                        "short_name": "Pack Qty",
                         "req": "O",
                         "data_type": "AN",
                         "data_type_ids": null,
@@ -1862,7 +1848,6 @@
                         "elements": [
                             {   "id": "FST01", "type": "element",
                                 "name": "Quantity",
-                                "short_name": "Qty",
                                 "req": "M",
                                 "data_type": "AN",
                                 "data_type_ids": null,
@@ -1871,7 +1856,6 @@
                             },
                             {   "id": "FST02", "type": "element",
                                 "name": "Forecast qualifier",
-                                "short_name": "Forecast Type",
                                 "req": "M",
                                 "data_type": "AN",
                                 "data_type_ids": {"D": "Planning"},
@@ -1880,7 +1864,6 @@
                             },
                             {   "id": "FST03", "type": "element",
                                 "name": "Forecast timing qualifier",
-                                "short_name": "Forecast Timing",
                                 "req": "M",
                                 "data_type": "AN",
                                 "data_type_ids": {"X": "Weekly Bucker"},
@@ -1889,7 +1872,6 @@
                             },
                             {   "id": "FST04", "type": "element",
                                 "name": "DATE",
-                                "short_name": "Start Date",
                                 "req": "M",
                                 "data_type": "DT",
                                 "data_type_ids": null,
@@ -1898,7 +1880,6 @@
                             },
                             {   "id": "FST05", "type": "element",
                                 "name": "DATE",
-                                "short_name": "End Date",
                                 "req": "M",
                                 "data_type": "DT",
                                 "data_type_ids": null,
@@ -1920,7 +1901,6 @@
                                 "elements": [
                                     {   "id": "SDQ01", "type": "element",
                                         "name": "Unit or Basis for Measurement Code",
-                                        "short_name": "Qty per Store UOM",
                                         "req": "M",
                                         "data_type": "AN",
                                         "data_type_ids": {"CA": "Case"},
@@ -1931,13 +1911,12 @@
                                         "name": "Identification Code Qualifier",
                                         "req": "M",
                                         "data_type": "AN",
-                                        "data_type_ids": {"92": "Assigned by Buyer or Buyer’s Agent"},
+                                        "data_type_ids": null,
                                         "length": {"min": 2, "max": 2},
                                         "notes": "92 = Assigned by Buyer or Buyer’s Agent"
                                     },
                                     {   "id": "SDQ03", "type": "element",
                                         "name": "Identification code",
-                                        "short_name": "Store",
                                         "req": "M",
                                         "data_type": "AN",
                                         "data_type_ids": null,
@@ -1946,7 +1925,6 @@
                                     },
                                     {   "id": "SDQ04", "type": "element",
                                         "name": "Quantity",
-                                        "short_name": "Qty per Store #",
                                         "req": "M",
                                         "data_type": "AN",
                                         "data_type_ids": null,
