@@ -18,7 +18,7 @@ setup(
     author="Ninja Dev",
     author_email="ninjadev999@gmail.com",
     license="MIT",
-    version="1.2.0",
+    version="1.2.1",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Plugins",
@@ -30,9 +30,9 @@ setup(
         "Topic :: Text Processing"
     ],
     keywords="x12 edi 830 csv pdf html",
-    packages=['pyedi830', 'pyedi830.formats'],
+    packages=['pyedi830', 'pyedi830.formats', 'pyedi830.template'],
     package_data={
-        "pyedi830": ["formats/*.json"]
+        "pyedi830": ["formats/*.json", "template/*.html"]
     },
     install_requires=['colorama', 'pandas', 'jinja2', 'weasyprint'],
     include_package_data=True,
