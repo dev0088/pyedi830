@@ -68,6 +68,7 @@ class EDI2CSV(EDIParser):
         
         parent_df, loop_df = self.parse(edi_file_path)
         
+        Debug.log_message(f"Writing a csv file...")
         header_title_df = self.create_header_title_df()
         header_title_df.to_csv(csv_file_path, header=True, index=False)
         
@@ -79,6 +80,7 @@ class EDI2CSV(EDIParser):
         
         item_headers_df = self.get_values(ITEM_DETAIL_HEADERS, loop_df)
         item_headers_df.to_csv(csv_file_path, mode='a', header=True, index=False)
+        Debug.log_message(f"Done to write the csv file.")
         
     def create_header_title_df(self):
         headers = ["HEADER"]
@@ -103,6 +105,7 @@ class EDI2CSV(EDIParser):
         return pd.DataFrame(columns=headers)
 
     def parse(self, edi_file_path):
+        Debug.log_message(f"Parsing an EDI file...")
         data = self.parser.parse(edi_file_path)
         
         parent_df = self.create_parent_df(data)
@@ -112,7 +115,7 @@ class EDI2CSV(EDIParser):
             Debug.log_debug(f"parent df: \n{parent_df}")
             Debug.log_debug(f"loop df: \n{loop_df}")
             # Debug.log_debug(f"merged df: \n{merged_df}")
-
+        Debug.log_message(f"Done to parse the edi file.")
         return parent_df, loop_df
 
     def create_parent_df(self, data):
