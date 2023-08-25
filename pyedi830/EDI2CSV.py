@@ -59,7 +59,7 @@ class EDI2CSV(EDIParser):
             use_child_key_detail=False,
             use_child_detail=False,
             use_short_name=False,
-            use_debug=True
+            use_debug=use_debug
         )
         self.json_data = None
         self.use_debug = use_debug
