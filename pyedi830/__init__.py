@@ -12,7 +12,6 @@ from .EDIParser import EDIParser
 from .EDIParserDF import EDIParserDF
 from .EDI2CSV import EDI2CSV
 from .EDI2HTML import EDI2HTML
-from .EDI2PDF import EDI2PDF
 from .supported_formats import supported_formats
 from .supported_formats import DEFAULT_FORMAT
 from .debug import Debug
