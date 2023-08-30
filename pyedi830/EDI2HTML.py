@@ -7,8 +7,8 @@ from .debug import Debug
 from .EDI2CSV import EDI2CSV, HEADERS, ITEM_DETAIL_HEADERS
 
 class EDI2HTML(EDI2CSV):
-    def __init__(self, template_file_path='830_Forecast.html', use_debug=False):
-        super().__init__(use_debug)
+    def __init__(self, template_file_path='830_Forecast.html', element_delimiter="*", segment_delimiter="~", data_delimiter="`", use_debug=False):
+        super().__init__(element_delimiter=element_delimiter, segment_delimiter=segment_delimiter, data_delimiter=data_delimiter, use_debug=use_debug)
         self.template_file_path=template_file_path
         self.use_debug = use_debug
         # Initialize the Jinja2 environment and specify the template directory
