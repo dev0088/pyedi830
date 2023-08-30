@@ -10,13 +10,14 @@ from .EDIParser import EDIParser
 
 class EDIParserDF(object):
     def __init__(
-        self, edi_format="830_Forecast", element_delimiter="*", segment_delimiter="~\n", data_delimiter="`",
+        self, edi_format="830_Forecast", element_delimiter="*", segment_delimiter="~", data_delimiter="`",
         show_symbol_in_header=False, repeat_filled_out=False, use_debug=False,
     ):
         self.parser = EDIParser(
-            edi_format="830_Forecast",
-            element_delimiter="*",
-            segment_delimiter="~\n",
+            edi_format=edi_format,
+            element_delimiter=element_delimiter,
+            segment_delimiter=segment_delimiter,
+            data_delimiter=data_delimiter,
             use_parent_key_detail=True,
             use_parent_detail=True,
             parent_headers=['symbol', 'id', 'name', 'short_name', 'type', 'notes', 'req', 'data_type', 'data_type_ids', 'length'],

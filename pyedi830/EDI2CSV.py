@@ -48,11 +48,12 @@ ITEM_DETAIL_HEADERS = [
 ]
 
 class EDI2CSV(EDIParser):
-    def __init__(self, use_debug=False):
+    def __init__(self, element_delimiter="*", segment_delimiter="~", data_delimiter="`", use_debug=False):
         self.parser = EDIParser(
             edi_format="830_Forecast",
-            element_delimiter="*",
-            segment_delimiter="~\n",
+            element_delimiter=element_delimiter,
+            segment_delimiter=segment_delimiter,
+            data_delimiter=data_delimiter,
             use_parent_key_detail=False,
             use_parent_detail=True,
             parent_headers=['symbol', 'id', 'name', 'short_name', 'type', 'notes', 'req', 'data_type', 'data_type_ids', 'length'],

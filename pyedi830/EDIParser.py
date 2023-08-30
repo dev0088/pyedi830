@@ -15,7 +15,7 @@ class EDIParser(object):
     PARED_VALUE_NAME = "parsed_value"
     
     def __init__(
-        self, edi_format="830_Forecast", element_delimiter="*", segment_delimiter="~\n", data_delimiter="`", 
+        self, edi_format="830_Forecast", element_delimiter="*", segment_delimiter="~", data_delimiter="`", 
         use_parent_key_detail=False, use_parent_detail=False, parent_headers=None, 
         use_child_key_detail=False, use_child_detail=False, child_headers=None,
         use_short_name=True,
@@ -63,15 +63,15 @@ class EDIParser(object):
     def parse_buffer(self, buffer: StringIO):
         json_data = None
         edi = buffer.getvalue()
-        lines = edi.split('\n')
+        # lines = edi.split(self.segment_delimiter)
         
-        # Remove last empty lines
-        while lines and not lines[-1].strip():
-            lines.pop()
-        edi = '\n'.join(lines)
+        # # Remove last empty lines
+        # while lines and not lines[-1].strip():
+        #     lines.pop()
+        # edi = self.segment_delimiter.join(lines)
         
         # Add an empty line to parse
-        edi += '\n'
+        edi += self.segment_delimiter
         found_segments, edi_data = self.parse_data(edi)
         json_data = edi_data
         
@@ -94,6 +94,8 @@ class EDIParser(object):
         
         while len(edi_segments) > 0:
             segment = edi_segments[0]
+            # Remove whitespace and \n
+            segment = segment.strip(" \n")
             if segment == "":
                 edi_segments = edi_segments[1:]
                 continue # Line is blank, skip
@@ -237,9 +239,11 @@ class EDIParser(object):
         to_return["symbol"] = loop_format["id"]
         to_return["name"] = loop_format["name"]
         to_return["type"] = loop_format["type"]
-        
+
         while len(edi_segments) > 0:
             segment = edi_segments[0]
+            # Remove whitespace and \n
+            segment = segment.strip(" \n")
             segment_name = segment.split(self.element_delimiter)[0]
             segment_obj = None
 
@@ -257,7 +261,7 @@ class EDIParser(object):
                     # Found a loop
                     segment_name = seg_format["id"]
                     segment_obj, edi_segments = self.parse_loop(edi_segments, seg_format)
-            #print(segment_name, segment_obj)
+
             if segment_obj is None:
                 # Reached the end of valid segments; return what we have
                 break

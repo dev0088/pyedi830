@@ -10,7 +10,7 @@ class TestParse830(unittest.TestCase):
         self.parser = pyedi830.EDIParser(
         edi_format="830_Forecast",
         element_delimiter="*",
-        segment_delimiter="~\n",
+        segment_delimiter="~",
         use_parent_key_detail=True,
         use_parent_detail=True,
         parent_headers=['symbol', 'name', 'type', 'notes'],
